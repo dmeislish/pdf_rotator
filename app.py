@@ -14,6 +14,11 @@ def rotate_pdf():
     uploaded_file = request.files['pdf_file']
     angle = float(request.form['degrees'])
 
+@app.route('/ads.txt')
+def ads():
+    return send_from_directory(os.path.dirname(os.path.abspath(__file__)), 'ads.txt') 
+    
+    
     # שמירה זמנית של הקובץ המקורי
     with tempfile.NamedTemporaryFile(delete=False, suffix=".pdf") as temp_input:
         uploaded_file.save(temp_input.name)
