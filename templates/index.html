@@ -62,6 +62,23 @@
         <label for="degrees">Rotation angle (e.g. 90, 180, 270 or any):</label>
         <input type="number" name="degrees" step="any" required>
 
+
+<h2>Number PDF Pages</h2>
+<form action="/number" method="post" enctype="multipart/form-data">
+    <label>Select PDF to number:</label>
+    <input type="file" name="pdf_file" accept="application/pdf" required><br>
+
+    <label>Select numbering style:</label>
+    <select name="style">
+        <option value="1">1, 2, 3...</option>
+        <option value="-1-">-1-, -2-, -3-...</option>
+        <option value="Page">Page 1, Page 2, Page 3...</option>
+    </select><br>
+
+    <button type="submit">Add Page Numbers</button>
+</form>
+
+
         <button type="submit">Rotate and Download</button>
     </form>
 </body>
