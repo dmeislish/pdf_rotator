@@ -43,3 +43,47 @@ def ads():
 
 if __name__ == '__main__':
     app.run(debug=True)
+
+@app.route('/number', methods=['POST'])
+def number_pdf():
+    if 'pdf_file' not in request.files:
+        return 'No file uploaded.', 400
+
+    file = request.files['pdf_file']
+    if file.filename == '':
+        return 'No selected file.', 400
+
+    style = request.form.get('style', '1')
+
+    filename = secure_filename(file.filename)
+    input_path = os.path.join('uploads', filename)
+    output_path = os.path.join('output', f"numbered_{filename}")
+
+    os.makedirs('uploads', exist_ok=True)
+    os.makedirs('output', exist_ok=True)
+
+    file.save(input_path)
+    doc = fitz.open(input_path)
+
+    for page_number in range(len(doc)):
+        page = doc[page_number]
+        num = page_number + 1
+
+        if style == '1':
+            text = str(num)
+        elif style == '-1-':
+            text = f"-{num}-"
+        elif style == 'Page':
+            text = f"Page {num}"
+        else:
+            text = str(num)
+
+        rect = page.rect
+        x = rect.width / 2
+        y = rect.height - 20
+        page.insert_text((x, y), text, fontsize=12, color=(0, 0, 0), render_mode=0, align=1)
+
+    doc.save(output_path)
+    doc.close()
+
+    return send_file(output_path, as_attachment=True)
