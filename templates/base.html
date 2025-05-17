@@ -1,0 +1,16 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>PDF Tools</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <nav>
+        <a href="/">Home</a>
+        <a href="/rotate">Rotate PDF</a>
+        <a href="/number">Add Page Numbers</a>
+    </nav>
+    {% block content %}{% endblock %}
+</body>
+</html>
